@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Building Surveys inside Haystack — Andrew</title>
+    <meta
+      name="description"
+      content="How we launched developer experience surveys inside Haystack to defend market position, increase participation, and generate new revenue."
+    />
+    <meta name="theme-color" content="#1f1f1f" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/styles.css" />
+  </head>
+  <body class="page-is-entering case-layout-gallery">
+    <div class="site">
+      <div class="page-shell">
+        <p class="case__back case__back--sticky" data-reveal>
+          <a class="intro__link case__back-link" href="../../index.html">
+            <span class="intro__link-icon case__back-icon" aria-hidden="true">
+              <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <clipPath id="case-back-pass-clip-surveys">
+                    <rect x="3.25" y="3.25" width="8.5" height="8.5" rx="0.25" />
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#case-back-pass-clip-surveys)">
+                  <g class="case__back-icon-pass case__back-icon-pass--outgoing">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                  <g class="case__back-icon-pass case__back-icon-pass--incoming">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <span>Go back</span>
+          </a>
+        </p>
+        <div class="page-shell__stack">
+          <article class="case case--gallery-layout" data-case-view-root data-case-view="visuals">
+            <header class="case__header">
+              <h1 class="case__title">Building Surveys inside Haystack</h1>
+              <p class="case__meta">2024–2025</p>
+            </header>
+
+            <p class="case__lede">
+              In response to a fast-growing competitor offering developer experience surveys based on qualitative data,
+              we built and launched a Surveys feature inside Haystack. The goal was to match the competitor's value
+              proposition, defend our market position, and transform a potential threat into an opportunity.
+            </p>
+
+            <div class="case-view-toggle" role="group" aria-label="Surveys case study view" data-case-view-toggle>
+              <button class="case-view-toggle__button is-active" type="button" data-case-view-button="visuals" aria-pressed="true">
+                Visuals
+              </button>
+              <button class="case-view-toggle__button" type="button" data-case-view-button="story" aria-pressed="false">
+                Story
+              </button>
+            </div>
+
+            <section class="case-gallery" aria-label="Surveys visual gallery" data-case-view-item="visuals">
+              <figure class="case-gallery__item case-gallery__item--video">
+                <video class="case-gallery__media" muted autoplay loop playsinline preload="metadata" aria-label="Haystack Surveys overview video">
+                  <source src="../../assets/cases/surveys/surveys-video.mp4" type="video/mp4" />
+                </video>
+              </figure>
+              <figure class="case-gallery__item">
+                <img
+                  class="case-gallery__media"
+                  src="../../assets/cases/surveys/setup-v1.png"
+                  alt="First version of the survey setup flow"
+                  width="1608"
+                  height="1219"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="case-gallery__item">
+                <img
+                  class="case-gallery__media"
+                  src="../../assets/cases/surveys/setup-v2.png"
+                  alt="Final survey settings page"
+                  width="1608"
+                  height="1071"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="case-gallery__item">
+                <img
+                  class="case-gallery__media"
+                  src="../../assets/cases/surveys/reminders-system.png"
+                  alt="Survey reminder system and Slack nudges"
+                  width="1608"
+                  height="1358"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="case-gallery__item case-gallery__item--video">
+                <video class="case-gallery__media" muted autoplay loop playsinline preload="metadata" aria-label="First version of the surveys commenting experience">
+                  <source src="../../assets/cases/surveys/comments-v1.mp4" type="video/mp4" />
+                </video>
+              </figure>
+              <figure class="case-gallery__item">
+                <img
+                  class="case-gallery__media"
+                  src="../../assets/cases/surveys/comments-v2.png"
+                  alt="Improved survey comments step"
+                  width="1608"
+                  height="1266"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="case-gallery__item">
+                <img
+                  class="case-gallery__media"
+                  src="../../assets/cases/surveys/results-dashboard.png"
+                  alt="Surveys results dashboard"
+                  width="1608"
+                  height="1060"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="case-gallery__item">
+                <img
+                  class="case-gallery__media"
+                  src="../../assets/cases/surveys/customer-wins.png"
+                  alt="Survey revenue wins and saved customer renewals"
+                  width="1608"
+                  height="1025"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </section>
+
+            <figure class="case__figure case__figure--video" data-case-view-item="story">
+              <video muted loop playsinline preload="metadata" aria-label="Haystack Surveys overview video">
+                <source src="../../assets/cases/surveys/surveys-video.mp4" type="video/mp4" />
+              </video>
+            </figure>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-context" data-case-view-item="story">
+              <h2 id="surveys-context">Context</h2>
+              <p>
+                We noticed a new company growing rapidly, about <strong>4x per year</strong>, by offering executive-level
+                insights through developer experience surveys. Although they were indirect competitors, they began
+                moving into our domain.
+              </p>
+              <p>
+                To maintain our strong market position, we needed to deliver our own version of developer experience
+                surveys quickly.
+              </p>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-goals" data-case-view-item="story">
+              <h2 id="surveys-goals">Goals</h2>
+              <p>To succeed, we needed to deliver three key promises:</p>
+              <ol class="case__ol">
+                <li><strong>2-Minute Setup.</strong> Launch surveys in under 2 minutes with no question writing.</li>
+                <li>
+                  <strong>90%+ Participation.</strong> Reach high response rates without creating work for the survey
+                  owner.
+                </li>
+                <li>
+                  <strong>Clear, Accurate Results.</strong> Make it obvious what’s working, what’s broken, and how to
+                  improve without reading a full report.
+                </li>
+              </ol>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-timeline" data-case-view-item="story">
+              <h2 id="surveys-timeline">Timeline</h2>
+              <ul class="case__list case__list--tight">
+                <li>
+                  <strong>Month 1.</strong> We began with discovery, designed clickable prototypes, and released to
+                  power users.
+                </li>
+                <li>
+                  <strong>Month 2.</strong> We paused the project. Interest was validated, but weeks of iteration
+                  yielded no closed deals.
+                </li>
+                <li>
+                  <strong>Month 3.</strong> We realized we had only made 10% progress on each promise, not truly
+                  solved any of them. We doubled down on complete solutions instead of partial MVPs, and that’s when
+                  everything clicked.
+                </li>
+              </ul>
+
+              <aside class="case__aside">
+                Below, I’ll analyze each promise, explaining what failed in our first attempt and how we ultimately
+                succeeded in the third month.
+              </aside>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-promise-1" data-case-view-item="story">
+              <h2 id="surveys-promise-1">Promise #1: 2-Minute Setup</h2>
+              <p>Survey creators had to be able to launch surveys in under 2 minutes with no manual setup.</p>
+              <p>
+                In our first month, we technically delivered the two-minute setup. But customers still felt limited by
+                missing controls, rough edges, and the amount of extra context they needed throughout the flow.
+              </p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/surveys/setup-v1.png"
+                  alt="First version of the survey setup flow with annotated product issues and missing controls"
+                  width="1608"
+                  height="1219"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  Survey settings at the end of the first month: we achieved the two-minute setup goal, but the page
+                  still suffered from “death by a thousand cuts.”
+                </figcaption>
+              </figure>
+
+              <p>We fixed these issues in our second attempt.</p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/surveys/setup-v2.png"
+                  alt="Final survey settings page with automated scheduling, topic previews, and team selection improvements"
+                  width="1608"
+                  height="1071"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">Survey settings at the end of the third month.</figcaption>
+              </figure>
+
+              <p>
+                There were tough but necessary product decisions during this update. For example, we required Slack
+                integration before publishing surveys. That reduced our potential user base, but it was essential for
+                achieving the second promise.
+              </p>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-promise-2" data-case-view-item="story">
+              <h2 id="surveys-promise-2">Promise #2: 90%+ Participation</h2>
+              <p>
+                Surveys typically suffer from low response rates. Ours had to achieve over 90% without burdening the
+                creator.
+              </p>
+              <p>
+                Initially, we offered manual survey sharing via link after publishing. We avoided Slack integration to
+                keep the feature accessible to a broader audience, but that decision led to poor results. Participation
+                rates landed around <strong>30–60%</strong>, and owners still had to chase responses manually.
+              </p>
+              <p>
+                To fix this, we restricted the feature to Slack-only. With Slack integration, we could automatically
+                nudge respondents via DM on behalf of the person who launched the survey. It felt personal, added
+                urgency, and drove much better behavior.
+              </p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/surveys/reminders-system.png"
+                  alt="Survey reminder system with scheduled Slack announcements, DM nudges, and Slack account linking state"
+                  width="1608"
+                  height="1358"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  Newly added reminders system. You set it up once and can be confident participation stays high.
+                </figcaption>
+              </figure>
+
+              <p>
+                As a result, participation rates jumped from roughly <strong>40%</strong> to <strong>75–92%</strong>,
+                depending on the team.
+              </p>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-promise-3" data-case-view-item="story">
+              <h2 id="surveys-promise-3">Promise #3: Clear, Accurate, and Valuable Results</h2>
+              <p>To make this promise real, we had to improve three things.</p>
+
+              <h3 class="case__subhead">Clear</h3>
+              <p>This meant the UX had to be simple and intuitive. We mostly achieved this in the first attempt.</p>
+
+              <h3 class="case__subhead">Accurate</h3>
+              <p>Questions needed to be research-backed, distinct, and well-formulated.</p>
+              <p>
+                In the next iteration, we refined the question set using real survey data and guidance from
+                psychometric experts. We had noticed respondents often placed comments under the wrong topics because of
+                overlap or ambiguity.
+              </p>
+              <p>
+                For example, a statement like <q class="case__pull">We follow development best practices</q> was too
+                vague, while <q class="case__pull">Our CI/CD tooling is fast and reliable</q> mixed two separate
+                concepts into one. We rewrote these prompts to be more precise.
+              </p>
+
+              <h3 class="case__subhead">Valuable</h3>
+              <p>
+                The feature needed to encourage respondents to share their concerns and suggestions, not just click
+                through scores.
+              </p>
+              <p>
+                Our first version simply included comment fields alongside answers. It looked clean and usable, but it
+                produced weak qualitative data: only <strong>0.5 comments per respondent</strong>.
+              </p>
+
+              <figure class="case__figure case__figure--video">
+                <video muted loop playsinline preload="metadata" aria-label="First version of the surveys commenting experience">
+                  <source src="../../assets/cases/surveys/comments-v1.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <figcaption class="case__caption">First version of commenting: nice, but hidden.</figcaption>
+              </figure>
+
+              <p>
+                In the next iteration, we separated ratings and comments into distinct steps and added clear messaging
+                about why feedback matters. We also made comments mandatory for any
+                <q class="case__pull">Strongly disagree</q> responses.
+              </p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/surveys/comments-v2.png"
+                  alt="Improved survey comments step with a dedicated page and prompts for written feedback"
+                  width="1608"
+                  height="1266"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  New comments section in Surveys, designed to make qualitative input visible and expected.
+                </figcaption>
+              </figure>
+
+              <p>
+                I was concerned that this extra step might reduce completion rates, but we saw zero drop-off. Once
+                participants started the survey, they stayed committed to finishing it.
+              </p>
+              <p>As a result, the average comment rate increased to <strong>4.6 comments per respondent</strong>.</p>
+
+              <p>
+                We paired that stronger qualitative data with a clearer results view, making it easier to spot the top
+                problem areas across teams and read the comments behind each score.
+              </p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/surveys/results-dashboard.png"
+                  alt="Surveys results dashboard with a heatmap, AI-ranked priorities, and qualitative comments"
+                  width="1608"
+                  height="1060"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  Final results experience: a heatmap view, prioritized issues, and direct comments in one place.
+                </figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-results" data-case-view-item="story">
+              <h2 id="surveys-results">Results</h2>
+              <ul class="case__list case__list--tight">
+                <li><strong>~$30K+ MRR</strong> generated in the first month</li>
+                <li><strong>Two enterprise clients</strong> saved from churn by reactivating with Surveys</li>
+              </ul>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/surveys/customer-wins.png"
+                  alt="Slack messages celebrating survey revenue wins and saved customer renewals"
+                  width="1608"
+                  height="1025"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">Some of the exciting wins we achieved while working on Surveys.</figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-decisions" data-case-view-item="story">
+              <h2 id="surveys-decisions">Product decisions that mattered</h2>
+              <ul class="case__list case__list--tight">
+                <li><strong>Slack-only.</strong> Risky choice, but essential to hit 90%+ completion with DM nudges.</li>
+                <li>
+                  <strong>Required comments step.</strong> Placed at the end of the survey to avoid early drop-off and
+                  ended up performing better than expected.
+                </li>
+              </ul>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="surveys-takeaways" data-case-view-item="story">
+              <h2 id="surveys-takeaways">Key takeaways</h2>
+              <ol class="case__ol">
+                <li>
+                  <strong>Details are everything.</strong> Anyone can build a survey tool. What matters is how it fits
+                  into the user’s real-world workflow.
+                </li>
+                <li>
+                  <strong>Uncomfortable decisions often pay off.</strong> Limiting Slack and enforcing comments both
+                  felt risky, but they worked.
+                </li>
+                <li>
+                  <strong>Push through uncertainty.</strong> Our biggest mistake was pausing mid-way out of self-doubt.
+                  Once we resumed, we moved fast and shipped something valuable.
+                </li>
+                <li>
+                  <strong>Regularly review and realign with your high-level goals.</strong> When stuck, step back,
+                  breathe, and verify whether you’re making real progress against the original promises.
+                </li>
+              </ol>
+            </section>
+
+            <nav class="case__pager" aria-label="Case study navigation">
+              <a class="case__pager-link" href="../../index.html">
+                <span class="case__pager-icon" aria-hidden="true">
+                  <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span class="case__pager-label">All case studies</span>
+              </a>
+              <a class="case__pager-link case__pager-link--next" href="../haystack/index.html">
+                <span class="case__pager-label">How we built Haystack from scratch to 1M ARR</span>
+                <span class="case__pager-icon" aria-hidden="true">
+                  <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M4 7.5H11M11 7.5L8 4.5M11 7.5L8 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </nav>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="lightbox" aria-hidden="true" hidden>
+      <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Expanded image view">
+        <div class="lightbox__toolbar">
+          <button class="lightbox__button" type="button" data-lightbox-zoom-out aria-label="Zoom out">−</button>
+          <button class="lightbox__button" type="button" data-lightbox-zoom-in aria-label="Zoom in">+</button>
+          <button class="lightbox__button" type="button" data-lightbox-close aria-label="Close image">Close</button>
+        </div>
+        <div class="lightbox__stage" data-lightbox-stage>
+          <img class="lightbox__image" alt="" data-lightbox-image />
+        </div>
+        <p class="lightbox__caption" data-lightbox-caption hidden></p>
+      </div>
+    </div>
+    <script src="../../js/site.js"></script>
+  </body>
+</html>

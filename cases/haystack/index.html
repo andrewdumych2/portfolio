@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How we built Haystack from scratch to 1M ARR — Andrew</title>
+    <meta
+      name="description"
+      content="From VP dashboards to engineering managers: validating, shipping daily, and scaling Haystack to $1.1M ARR — case study by Andrew Dumych."
+    />
+    <meta name="theme-color" content="#1f1f1f" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/styles.css" />
+  </head>
+  <body class="page-is-entering">
+    <div class="site">
+      <div class="page-shell">
+        <p class="case__back case__back--sticky" data-reveal>
+          <a class="intro__link case__back-link" href="../../index.html">
+            <span class="intro__link-icon case__back-icon" aria-hidden="true">
+              <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <clipPath id="case-back-pass-clip-haystack">
+                    <rect x="3.25" y="3.25" width="8.5" height="8.5" rx="0.25" />
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#case-back-pass-clip-haystack)">
+                  <g class="case__back-icon-pass case__back-icon-pass--outgoing">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                  <g class="case__back-icon-pass case__back-icon-pass--incoming">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <span>Go back</span>
+          </a>
+        </p>
+        <div class="page-shell__stack">
+          <article class="case">
+            <header class="case__header">
+              <h1 class="case__title">How we built Haystack from scratch to 1M ARR</h1>
+              <p class="case__meta">2022–2025</p>
+            </header>
+
+            <p class="case__lede">
+              In early 2022, Haystack’s product helped VPs track software delivery metrics, but engineering managers
+              were still buried in Jira’s noise. We were on a mission—to build something that would bridge this gap and
+              drive growth.
+            </p>
+
+            <figure class="case__figure">
+              <img
+                src="../../assets/cases/haystack/fig-01-intro.png"
+                alt="Haystack product context: executives versus engineering managers in the delivery workflow"
+                width="1600"
+                height="900"
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="case-context">
+              <h2 id="case-context">Context &amp; goals</h2>
+              <p>
+                Engineering executives already loved how Haystack helped them keep a pulse on their organization's health
+                and track key metrics. However, they were typically the only Haystack customer in their organization, so
+                when they changed workplaces, we often lost the entire organization as a client.
+              </p>
+              <p>
+                Our assumption was:
+                <em
+                  >If we expand beyond executive users to capture a broader market of engineering managers, we will engage
+                  more people per company, which will protect us from unexpected churn and ultimately increase revenue.</em
+                >
+              </p>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="case-validation">
+              <h2 id="case-validation">Initial validation</h2>
+              <p>
+                Our primary goal was to quickly validate whether engineering managers found enough value in our ideas to
+                pay for them.
+              </p>
+              <p>
+                We compiled a list of features to validate, drawing from both competitor analysis and internal
+                brainstorming. I then created initial prototypes designed to <em>look</em> like a finished product, with
+                screens that would strengthen our pitch.
+              </p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/haystack/fig-02-prototypes.png"
+                  alt="Collage of early Haystack UI prototypes built with Flowbite components"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  Bunch of screenshots I built. I used
+                  <a href="https://flowbite.com/" rel="noopener noreferrer">Flowbite library</a>, so I wouldn’t spend too
+                  much time on building it from scratch.
+                </figcaption>
+              </figure>
+
+              <p>
+                Then we started reaching out to existing customers and asked them to connect us with engineering managers
+                (EMs) in their organizations. Julian (CEO at Haystack) showcased these features to EMs and
+                <a href="https://medium.com/tradecraft-traction/a-growth-marketers-guide-to-smoke-tests-6ffa964a6181" rel="noopener noreferrer">smoke tested</a>
+                ideas.
+              </p>
+              <p>
+                We iterated between calls based on learnings until we got our first
+                <q class="case__pull">I'd probably buy that</q> response. Within a month, we had early proof that the idea
+                was viable—a few customers expressed interest in paying for it (even though it wasn't built yet!).
+              </p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/haystack/fig-03-discovery.png"
+                  alt="Calendar or summary showing 26 discovery calls compressed into one week"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  26(!) discovery calls packed into one week — how did Julian pull this off?
+                </figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="case-first-feature">
+              <h2 id="case-first-feature">Building our first feature</h2>
+              <p>
+                In the next month we decided to spend more efforts on this idea. That’s when Furkan (software engineer)
+                joined our team to help us actually build this product. Out of all ideas we tested in a previous step, we
+                focused <strong>on the 4 most anticipated jobs:</strong>
+              </p>
+              <ol class="case__ol">
+                <li>Track progress since the last check-in (daily stand-ups)</li>
+                <li>Understand whether we are on or off track against the sprint goal</li>
+                <li>Monitor changes to the sprint plan</li>
+                <li>Identify blocked work</li>
+              </ol>
+              <p>
+                Our strategy centered on rapid development and continuous improvement. We first built a quick version,
+                used it in our internal stand-ups, and shared it with early adopters. Through daily testing and
+                iterations, we refined the product until we were confident it was ready for broader release.
+              </p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/haystack/fig-04-active-board.png"
+                  alt="Haystack Active Board used during team stand-ups"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  Every day we used and tested Active Board page during our daily stand-ups. After each meeting, we
+                  created and prioritized a list of updates for the day.
+                </figcaption>
+              </figure>
+
+              <p>
+                The biggest challenge? <strong>Designing and releasing at a daily pace.</strong> At first, preparing
+                enough work for three engineers each morning seemed impossible. But gradually, through our discussions, we
+                developed such a shared understanding that formal design handoffs became unnecessary.
+              </p>
+              <p>After countless iterations, we finally felt ready to actually sell it to customers.</p>
+
+              <figure class="case__figure">
+                <div
+                  class="image-compare"
+                  data-image-compare
+                  data-left-image="../../assets/cases/haystack/issues-compare-v1.png"
+                  data-right-image="../../assets/cases/haystack/issues-compare-v2.png"
+                  data-left-label="v1"
+                  data-right-label="v999..."
+                  data-aspect-ratio="1 / 1"
+                  data-default-zoom="1.5"
+                  aria-label="Evolution of the issues page"
+                >
+                  <div class="image-compare__panes">
+                    <div class="image-compare__pane">
+                      <div class="image-compare__viewport">
+                        <img class="image-compare__image" alt="Evolution of the issues page version 1" data-compare-image="left" />
+                      </div>
+                      <p class="image-compare__label" data-compare-label="left"></p>
+                    </div>
+                    <div class="image-compare__pane">
+                      <div class="image-compare__viewport">
+                        <img class="image-compare__image" alt="Evolution of the issues page latest version" data-compare-image="right" />
+                      </div>
+                      <p class="image-compare__label" data-compare-label="right"></p>
+                    </div>
+                  </div>
+                  <div class="image-compare__mobile" data-compare-mobile>
+                    <div class="image-compare__mobile-frame">
+                      <img class="image-compare__mobile-image image-compare__mobile-image--base" alt="Evolution of the issues page latest version" data-compare-mobile-image="right" />
+                      <div class="image-compare__mobile-overlay" data-compare-mobile-overlay>
+                        <img class="image-compare__mobile-image" alt="Evolution of the issues page version 1" data-compare-mobile-image="left" />
+                      </div>
+                      <div class="image-compare__mobile-divider" data-compare-mobile-divider>
+                        <div class="image-compare__mobile-handle" data-compare-mobile-handle>
+                          <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path
+                              d="M6 4.5L3.5 7.5L6 10.5M9 4.5L11.5 7.5L9 10.5"
+                              stroke="currentColor"
+                              stroke-width="1.25"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="image-compare__mobile-labels">
+                      <p class="image-compare__label" data-compare-mobile-label="left"></p>
+                      <p class="image-compare__label" data-compare-mobile-label="right"></p>
+                    </div>
+                  </div>
+                </div>
+                <figcaption class="case__caption">
+                  Evolution of the issues page: first and last iteration. Drag the handle to compare versions.
+                </figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="case-expanding">
+              <h2 id="case-expanding">Expanding our workflow coverage</h2>
+              <p>
+                Even though we received a ton of positive feedback from our customers, we still had a hard time to sell
+                it. After tons of discussions we realized, that value we provide was not sufficient to actually consider
+                paying for it. We needed to build up enough value to justify our pricing. Therefore, we decided to
+                explore additional workflows:
+              </p>
+              <ul class="case__list case__list--tight">
+                <li><strong>Retrospect.</strong> Sprint summaries and analysis</li>
+                <li><strong>Report to executives.</strong> Automated sprint over sprint reporting to execs</li>
+                <li><strong>Unblock people.</strong> Slack notifications for emerging delivery issues</li>
+              </ul>
+              <p>High-level approach was similar: <strong>quickly release, test, iterate.</strong></p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/haystack/fig-05-retrospective.png"
+                  alt="Haystack retrospective view showing sprint planning and execution quality"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  Retrospective page: helps you to see how well your team planned and executed sprint
+                </figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="case-executive">
+              <h2 id="case-executive">Executive buy-in: The missing piece</h2>
+              <p>
+                As the product evolved, we saw an increase in weekly active users and gained new customers. However,
+                selling the product remained challenging.
+              </p>
+              <p>
+                While we had built a separate product for Engineering Managers from the ground up, it offered minimal
+                value for executives—who were typically the decision-makers for purchases. Therefore, we decided to
+                shift our focus to that persona.
+              </p>
+              <p>
+                We shipped a <em>Customizable Reporting</em> dashboard. It was used during onboarding call where Customer
+                Success guided setup for tailored reports:
+              </p>
+
+              <figure class="case__figure case__figure--video">
+                <video muted loop playsinline preload="metadata">
+                  <source src="../../assets/cases/haystack/fig-06-reports.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <figcaption class="case__caption">
+                  Reports page: place where you can build a dashboard specifically crafted for your company structure and
+                  domain
+                </figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="case-results">
+              <h2 id="case-results">Results &amp; impact</h2>
+              <p>By April 2025, here are the key results we achieved:</p>
+              <ul class="case__list case__list--tight">
+                <li><strong>$1.1M ARR</strong> by April 2025</li>
+                <li><strong>60+ customers</strong>, including Schneider Electric, Visa, Shutterstock and Cameo</li>
+                <li>Weekly active users grew to <strong>200+</strong></li>
+              </ul>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/haystack/fig-07-mixpanel.png"
+                  alt="Mixpanel chart of weekly active usage for Haystack Delivery"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="case__caption">
+                  Weekly active usage of Haystack Delivery in
+                  <a href="https://mixpanel.com/" rel="noopener noreferrer">Mixpanel</a>
+                </figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="case-takeaways">
+              <h2 id="case-takeaways">My key takeaways</h2>
+              <p>
+                While writing this case study, I noticed something unexpected: I kept talking about <em>us</em>—the
+                team—instead of just <em>me</em>. This wasn't planned, but it felt natural. For the first time, I wasn't
+                trying to inflate my importance or sound impressive. I was simply being honest.
+              </p>
+              <p>And that honesty led to a realization.</p>
+              <p>
+                There's a widespread belief in our field that UX and product designers must be the ultimate experts on
+                users. After all, we're the "user experience" people, right? But this isn't actually true. Designers
+                typically have fewer direct customer conversations than customer success teams, sales representatives, or
+                leadership. Yet we often feel pressured to act like we <em>should</em> know everything. This mindset
+                leads to working in silos, overthinking, and overdesigning—ultimately wasting time and building features
+                users don't need.
+              </p>
+              <p>
+                At Haystack, I started dropping that act. I stopped pretending I had all the answers and started
+                listening more—especially to teammates who knew more and had something to say. That shift changed
+                everything.
+              </p>
+              <p>
+                I now believe my real job as a designer begins with <em>listening and asking</em>. Only
+                <em>then</em> should I build prototypes. When the team embraces this approach, everything
+                improves—becoming faster, more focused, and more valuable.
+              </p>
+              <p>
+                If this resonates, I highly recommend
+                <a href="https://vimeo.com/275265188" rel="noopener noreferrer">talk by Paul Adams</a>, a designer
+                behind Intercom.
+              </p>
+            </section>
+
+            <p class="case__source">
+              Also on
+              <a
+                class="case__source-link"
+                href="https://andrewdumych.notion.site/How-we-built-Haystack-from-scratch-to-1M-ARR-1e0b51f34039806b87e9f5e96c22e2c1"
+                rel="noopener noreferrer"
+                >Notion</a
+              >
+            </p>
+
+            <nav class="case__pager" aria-label="Case study navigation">
+              <a class="case__pager-link" href="../surveys/index.html">
+                <span class="case__pager-icon" aria-hidden="true">
+                  <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span class="case__pager-label">Building Surveys: From MVP to Monetization</span>
+              </a>
+              <a class="case__pager-link case__pager-link--next" href="../certificate/index.html">
+                <span class="case__pager-label">Rethinking the year-end recap</span>
+                <span class="case__pager-icon" aria-hidden="true">
+                  <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M4 7.5H11M11 7.5L8 4.5M11 7.5L8 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </nav>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="lightbox" aria-hidden="true" hidden>
+      <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Expanded image view">
+        <div class="lightbox__toolbar">
+          <button class="lightbox__button" type="button" data-lightbox-zoom-out aria-label="Zoom out">−</button>
+          <button class="lightbox__button" type="button" data-lightbox-zoom-in aria-label="Zoom in">+</button>
+          <button class="lightbox__button" type="button" data-lightbox-close aria-label="Close image">Close</button>
+        </div>
+        <div class="lightbox__stage" data-lightbox-stage>
+          <img class="lightbox__image" alt="" data-lightbox-image />
+        </div>
+        <p class="lightbox__caption" data-lightbox-caption hidden></p>
+      </div>
+    </div>
+    <script src="../../js/site.js"></script>
+  </body>
+</html>

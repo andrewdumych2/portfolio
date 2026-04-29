@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none">
+  <filter id="noise" x="0" y="0" width="160" height="160" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <feTurbulence
+      type="fractalNoise"
+      baseFrequency="0.85"
+      numOctaves="2"
+      seed="8023"
+      stitchTiles="stitch"
+      result="turbulence"
+    />
+    <feColorMatrix in="turbulence" type="saturate" values="0" result="desaturated" />
+    <feComponentTransfer in="desaturated" result="grain">
+      <feFuncA type="table" tableValues="0 0.12 0.22 0.34 0.46 0.58 0.7 0.82" />
+    </feComponentTransfer>
+  </filter>
+  <rect width="160" height="160" filter="url(#noise)" fill="#000000" />
+</svg>

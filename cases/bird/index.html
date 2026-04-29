@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Optimizing AI-Powered Apartment Search at Bird — Andrew</title>
+    <meta
+      name="description"
+      content="How Bird redesigned apartment discovery with AI-powered comparison, nearby places, and a sharper search experience."
+    />
+    <meta name="theme-color" content="#1f1f1f" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/styles.css" />
+  </head>
+  <body class="page-is-entering">
+    <div class="site">
+      <div class="page-shell">
+        <p class="case__back case__back--sticky" data-reveal>
+          <a class="intro__link case__back-link" href="../../index.html">
+            <span class="intro__link-icon case__back-icon" aria-hidden="true">
+              <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <clipPath id="case-back-pass-clip-bird">
+                    <rect x="3.25" y="3.25" width="8.5" height="8.5" rx="0.25" />
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#case-back-pass-clip-bird)">
+                  <g class="case__back-icon-pass case__back-icon-pass--outgoing">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                  <g class="case__back-icon-pass case__back-icon-pass--incoming">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <span>Go back</span>
+          </a>
+        </p>
+        <div class="page-shell__stack">
+          <article class="case" data-case-view-root data-case-view="story">
+            <header class="case__header">
+              <h1 class="case__title">Optimizing AI-Powered Apartment Search at Bird</h1>
+              <div class="case-view-toggle" role="group" aria-label="Bird case study view" data-case-view-toggle>
+                <button class="case-view-toggle__button" type="button" data-case-view-button="visuals" aria-pressed="false">
+                  Visuals
+                </button>
+                <button class="case-view-toggle__button is-active" type="button" data-case-view-button="story" aria-pressed="true">
+                  Story
+                </button>
+              </div>
+            </header>
+
+            <p class="case__lede" data-case-view-item="story">
+              <strong
+                >At Bird, I set out to solve a problem every renter knows too well: starting with one idea of an
+                apartment and ending up somewhere completely different.</strong
+              >
+            </p>
+
+            <p class="case__lede" data-case-view-item="story">
+              Our job was to redesign the app so people could find what they <em>really</em> wanted, faster. Along the
+              way, I dug into the messy reality of “floating filters” — how budgets shift, locations expand, and needs
+              evolve mid-search. Bird has already helped more than 200,000 people find a home, and this was my part in
+              making that journey smoother.
+            </p>
+
+            <figure class="case__figure">
+              <img
+                src="../../assets/cases/bird/6.png"
+                alt="Bird apartment search concepts showing comparison, nearby places, and winner selection flows"
+                width="1680"
+                height="920"
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="bird-design-process" data-case-view-item="story">
+              <h2 id="bird-design-process">Design process</h2>
+              <p>Discover → Define → Ideate → Prototype &amp; Test</p>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="bird-discovery">
+              <h2 id="bird-discovery">Discovery</h2>
+              <p data-case-view-item="story">
+                After defining the goals, problems, and audience, we spoke with potential clients to learn about their
+                experience searching for a place to rent.
+              </p>
+              <p data-case-view-item="story">Here are some interesting insights:</p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/bird/5.png"
+                  alt="Interview insights about apartment search frustrations and neighborhood uncertainty"
+                  width="3360"
+                  height="2562"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="bird-define">
+              <h2 id="bird-define">Define</h2>
+              <p data-case-view-item="story">
+                After that, we analyzed the interviews and highlighted the main takeaways. We divided these insights
+                into three types:
+              </p>
+              <ul class="case__list case__list--tight" data-case-view-item="story">
+                <li>Jobs (what users did)</li>
+                <li>Gains (the positive moments during the apartment search)</li>
+                <li>Pains (the issues and difficulties respondents faced)</li>
+              </ul>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/bird/4.png"
+                  alt="Jobs, gains, and pains framework for apartment search interviews"
+                  width="1680"
+                  height="1753"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="bird-develop">
+              <h2 id="bird-develop">Develop</h2>
+              <p data-case-view-item="story">
+                Using insights from the interviews, we held a few brainstorming sessions. As a result, we generated
+                ~240 ideas for improving the user experience.
+              </p>
+              <p data-case-view-item="story">Below, you can see the ideas we generated for one of the user pain points:</p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/bird/3.png"
+                  alt="Brainstormed product ideas responding to difficulty choosing between apartments"
+                  width="1680"
+                  height="2266"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="bird-deliver">
+              <h2 id="bird-deliver">Deliver</h2>
+              <p data-case-view-item="story">
+                Of course, not all of the ideas were good, so we decided to select the best ones and prioritize them
+                using a prioritization matrix:
+              </p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/bird/2.png"
+                  alt="Prioritization matrix for Bird product ideas mapped by effort and value"
+                  width="1680"
+                  height="876"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="bird-hypotheses">
+              <h2 id="bird-hypotheses">Hypotheses</h2>
+              <p data-case-view-item="story">The next step was to turn our best ideas into hypotheses:</p>
+
+              <figure class="case__figure">
+                <img
+                  src="../../assets/cases/bird/1.png"
+                  alt="Three Bird product hypotheses focused on apartment comparison, nearby places, and onboarding"
+                  width="1600"
+                  height="911"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="bird-ui-testing" data-case-view-item="story">
+              <h2 id="bird-ui-testing">UI design &amp; usability testing</h2>
+              <p>
+                Since our client already had a style guide, we moved straight into UI design. We conducted usability
+                testing to identify issues in our designs and improve them between testing rounds.
+              </p>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="bird-feature-comparison">
+              <h2 id="bird-feature-comparison">Feature #1: Apartments comparison</h2>
+
+              <h3 class="case__subhead" data-case-view-item="story">Hypothesis</h3>
+              <p data-case-view-item="story">
+                The user cannot decide between the two apartments that suit him best, so we allow him to compare these
+                options, which will increase the click-through rate.
+              </p>
+
+              <h3 class="case__subhead" data-case-view-item="story">Solution</h3>
+              <p data-case-view-item="story">We wanted to create a completely new experience, not just a way to compare boring data.</p>
+              <p data-case-view-item="story">
+                It all starts when a user opens their favorites. After the user clicks the 'Compare' button, the app
+                suggests choosing two apartments to compare.
+              </p>
+              <p data-case-view-item="story">
+                The app automatically generates stories with facts about each apartment. The user then selects the fact
+                they like better.
+              </p>
+              <p data-case-view-item="story">
+                After completing the quiz, the app suggests that the user check more details about the apartment that won.
+              </p>
+
+              <figure class="case__figure case__figure--video">
+                <video muted loop playsinline preload="metadata" aria-label="Bird apartment comparison feature preview">
+                  <source src="../../assets/cases/bird/7.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <figcaption class="case__caption">Comparison feature preview</figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" />
+
+            <section class="case__section" aria-labelledby="bird-feature-nearby">
+              <h2 id="bird-feature-nearby">Feature #2: Nearby places</h2>
+
+              <h3 class="case__subhead" data-case-view-item="story">Hypothesis</h3>
+              <p data-case-view-item="story">
+                The user wants to know more about a specific district, so we will show him the places around the
+                selected apartment, which will increase the click-through rate.
+              </p>
+
+              <h3 class="case__subhead" data-case-view-item="story">Solution</h3>
+              <p data-case-view-item="story">The main challenge was creating a UI that felt light yet informative.</p>
+              <p data-case-view-item="story">
+                We solved this by dividing the feature into two parts. The user can quickly glance at the map to get a
+                general understanding of the infrastructure. At the same time, if they want to dive deeper, they can
+                swipe up and see the full list of nearby places.
+              </p>
+
+              <figure class="case__figure case__figure--video">
+                <video muted loop playsinline preload="metadata" aria-label="Bird nearby places feature preview">
+                  <source src="../../assets/cases/bird/8.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <figcaption class="case__caption">Nearby places preview</figcaption>
+              </figure>
+            </section>
+
+            <hr class="case__divider" data-case-view-item="story" />
+
+            <section class="case__section" aria-labelledby="bird-results" data-case-view-item="story">
+              <h2 id="bird-results">Key Results &amp; Impact</h2>
+              <p>
+                The main principle of the Bird app is Love ❤️. Love appears when the user receives more from the
+                product than they expect. We kept that in mind while designing these features. And it helped us stand
+                out among other teams and <strong>win this project</strong>.
+              </p>
+
+              <aside class="case__aside">
+                See more design materials in this
+                <a href="https://www.figma.com/file/TPYi5rlhoofBqXTZMjyQPN/Case-%231%2FBird?node-id=13%3A566">Figma file</a>.
+              </aside>
+            </section>
+
+            <nav class="case__pager" aria-label="Case study navigation">
+              <a class="case__pager-link" href="../certificate/index.html">
+                <span class="case__pager-icon" aria-hidden="true">
+                  <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span class="case__pager-label">Rethinking the year-end recap</span>
+              </a>
+              <a
+                class="case__pager-link case__pager-link--next"
+                href="https://www.linkedin.com/in/andrew-dumych-67b92817b/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="case__pager-label">LinkedIn</span>
+                <span class="case__pager-icon" aria-hidden="true">
+                  <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M4 7.5H11M11 7.5L8 4.5M11 7.5L8 10.5"
+                      stroke="currentColor"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </nav>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="lightbox" aria-hidden="true" hidden>
+      <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Expanded image view">
+        <div class="lightbox__toolbar">
+          <button class="lightbox__button" type="button" data-lightbox-zoom-out aria-label="Zoom out">−</button>
+          <button class="lightbox__button" type="button" data-lightbox-zoom-in aria-label="Zoom in">+</button>
+          <button class="lightbox__button" type="button" data-lightbox-close aria-label="Close image">Close</button>
+        </div>
+        <div class="lightbox__stage" data-lightbox-stage>
+          <img class="lightbox__image" alt="" data-lightbox-image />
+        </div>
+        <p class="lightbox__caption" data-lightbox-caption hidden></p>
+      </div>
+    </div>
+    <script src="../../js/site.js"></script>
+  </body>
+</html>
