@@ -171,297 +171,314 @@
     });
   }
 
-  function initFloatingCaseHeaders() {
-    document.querySelectorAll("[data-case-view-root]").forEach((root) => {
-      const toggle = root.querySelector("[data-case-view-toggle]");
-      const title = root.querySelector(".case__title");
-      const backLink = document.querySelector(".case__back-link");
-
-      if (!toggle || !title || !backLink) return;
-
-      const floatingHeader = document.createElement("div");
-      floatingHeader.className = "case__floating-header";
-
-      const floatingBack = document.createElement("a");
-      floatingBack.className = "case__floating-back";
-      floatingBack.href = backLink.href;
-      floatingBack.setAttribute("aria-label", "Go back");
-      floatingBack.innerHTML =
-        '<svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 7.5H4M4 7.5L7 4.5M4 7.5L7 10.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" /></svg>';
-
-      const floatingMain = document.createElement("div");
-      floatingMain.className = "case__floating-main";
-
-      const floatingTitle = document.createElement("p");
-      floatingTitle.className = "case__floating-title";
-      floatingTitle.textContent = title.textContent || "";
-
-      const floatingToggle = toggle.cloneNode(true);
-      floatingToggle.classList.add("case__floating-toggle");
-
-      floatingMain.append(floatingTitle, floatingToggle);
-      floatingHeader.append(floatingBack, floatingMain);
-      document.body.appendChild(floatingHeader);
-
-      const syncView = (view) => {
-        root.dataset.caseView = view;
-
-        root.querySelectorAll("[data-case-view-button]").forEach((button) => {
-          const isActive = button.dataset.caseViewButton === view;
-          button.classList.toggle("is-active", isActive);
-          button.setAttribute("aria-pressed", String(isActive));
-        });
-
-        root.querySelectorAll("[data-case-view-item]").forEach((item) => {
-          const itemView = item.dataset.caseViewItem || "story";
-          item.hidden = itemView !== view;
-        });
-      };
-
-      floatingToggle.querySelectorAll("[data-case-view-button]").forEach((button) => {
-        button.addEventListener("click", () => {
-          syncView(button.dataset.caseViewButton || "story");
-        });
-      });
-
-      const originalButtons = Array.from(toggle.querySelectorAll("[data-case-view-button]"));
-      originalButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          syncView(button.dataset.caseViewButton || "story");
-        });
-      });
-
-      const stickyTop = 24;
-      const updateFloatingHeader = () => {
-        if (window.innerWidth <= 767) {
-          floatingHeader.classList.remove("is-visible");
-          root.classList.remove("is-floating-header-visible");
-          return;
-        }
-
-        const toggleRect = toggle.getBoundingClientRect();
-        const shouldShow = toggleRect.top <= stickyTop;
-
-        floatingHeader.classList.toggle("is-visible", shouldShow);
-        root.classList.toggle("is-floating-header-visible", shouldShow);
-      };
-
-      syncView(root.dataset.caseView || "story");
-      updateFloatingHeader();
-      window.addEventListener("scroll", updateFloatingHeader, { passive: true });
-      window.addEventListener("resize", updateFloatingHeader);
-    });
-  }
-
   function initLightbox() {
     const lightbox = document.querySelector(".lightbox");
     if (!lightbox) return;
 
-    const lightboxCaption = lightbox.querySelector("[data-lightbox-caption]");
     const lightboxStage = lightbox.querySelector("[data-lightbox-stage]");
-    const zoomInButton = lightbox.querySelector("[data-lightbox-zoom-in]");
-    const zoomOutButton = lightbox.querySelector("[data-lightbox-zoom-out]");
-    const closeButton = lightbox.querySelector("[data-lightbox-close]");
     const toolbar = lightbox.querySelector(".lightbox__toolbar");
+    const lightboxCaption = lightbox.querySelector("[data-lightbox-caption]");
+    const imageNodes = Array.from(document.querySelectorAll(".case__figure > img, .case-gallery__item > img"));
 
-    if (!lightboxCaption || !lightboxStage || !zoomInButton || !zoomOutButton || !closeButton || !toolbar) {
+    if (!lightboxStage || !imageNodes.length) {
       return;
     }
+
+    if (toolbar) toolbar.hidden = true;
+    if (lightboxCaption) lightboxCaption.hidden = true;
 
     lightboxStage.textContent = "";
 
     const lightboxImage = document.createElement("img");
     lightboxImage.className = "lightbox__image";
     lightboxImage.hidden = true;
+    lightboxStage.append(lightboxImage);
 
-    const lightboxVideo = document.createElement("video");
-    lightboxVideo.className = "lightbox__video";
-    lightboxVideo.controls = true;
-    lightboxVideo.playsInline = true;
-    lightboxVideo.hidden = true;
+    let activeSource = null;
+    let isOpen = false;
+    let isAnimating = false;
+    let activeAnimation = null;
 
-    lightboxStage.append(lightboxImage, lightboxVideo);
+    const easingEnter = "cubic-bezier(0.23, 1, 0.32, 1)";
+    const easingExit = "cubic-bezier(0.32, 0.72, 0, 1)";
 
-    const toolbarSpacer = document.createElement("div");
-    toolbarSpacer.className = "lightbox__toolbar-spacer";
+    const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const prevButton = document.createElement("button");
-    prevButton.className = "lightbox__button";
-    prevButton.type = "button";
-    prevButton.setAttribute("aria-label", "Previous media");
-    prevButton.textContent = "←";
-
-    const nextButton = document.createElement("button");
-    nextButton.className = "lightbox__button";
-    nextButton.type = "button";
-    nextButton.setAttribute("aria-label", "Next media");
-    nextButton.textContent = "→";
-
-    toolbar.prepend(toolbarSpacer);
-    toolbar.insertBefore(nextButton, zoomOutButton);
-    toolbar.insertBefore(prevButton, nextButton);
-
-    let lightboxZoom = 1;
-    let activeMedia = [];
-    let activeIndex = -1;
-
-    const syncLightboxZoom = () => {
-      lightboxImage.style.transform = "scale(" + lightboxZoom + ")";
-      lightboxImage.classList.toggle("is-zoomed", lightboxZoom > 1);
-      const isImageActive = !lightboxImage.hidden;
-      zoomOutButton.disabled = !isImageActive || lightboxZoom <= 1;
-      zoomInButton.disabled = !isImageActive || lightboxZoom >= 3;
+    const getRect = (node) => {
+      if (!node) return null;
+      const rect = node.getBoundingClientRect();
+      return {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      };
     };
 
-    const syncLightboxNavigation = () => {
-      const hasMultiple = activeMedia.length > 1;
-      prevButton.disabled = !hasMultiple;
-      nextButton.disabled = !hasMultiple;
+    const getOverlayRect = () => ({
+      top: Number.parseFloat(lightboxImage.style.top || "0"),
+      left: Number.parseFloat(lightboxImage.style.left || "0"),
+      width: Number.parseFloat(lightboxImage.style.width || "0"),
+      height: Number.parseFloat(lightboxImage.style.height || "0"),
+    });
+
+    const applyRect = (rect) => {
+      if (!rect) return;
+      lightboxImage.style.top = rect.top + "px";
+      lightboxImage.style.left = rect.left + "px";
+      lightboxImage.style.width = rect.width + "px";
+      lightboxImage.style.height = rect.height + "px";
     };
 
-    const getMediaCaption = (node) => node.closest("figure")?.querySelector(".case__caption")?.textContent?.trim() || "";
+    const getTargetRect = (node) => {
+      const fallbackRect = getRect(node);
+      const naturalWidth = node.naturalWidth || fallbackRect?.width || 1;
+      const naturalHeight = node.naturalHeight || fallbackRect?.height || 1;
+      const padding = window.innerWidth <= 767 ? 16 : 28;
+      const maxWidth = Math.max(0, window.innerWidth - padding * 2);
+      const maxHeight = Math.max(0, window.innerHeight - padding * 2);
+      const scale = Math.min(maxWidth / naturalWidth, maxHeight / naturalHeight);
+      const width = Math.round(naturalWidth * scale);
+      const height = Math.round(naturalHeight * scale);
 
-    const getMediaCollection = (node) => {
-      const scope = node.closest(".case") || document;
-      return Array.from(
-        scope.querySelectorAll(".case__figure > img, .case__figure--video > video, .case-gallery__item > img, .case-gallery__item > video")
-      );
+      return {
+        top: Math.round((window.innerHeight - height) / 2),
+        left: Math.round((window.innerWidth - width) / 2),
+        width,
+        height,
+      };
     };
 
-    const showMedia = (node) => {
-      const caption = getMediaCaption(node);
-      const isVideo = node.tagName === "VIDEO";
+    const getBorderRadius = (node, fallback) => getComputedStyle(node).borderRadius || fallback;
+    const nextFrame = () =>
+      new Promise((resolve) => {
+        requestAnimationFrame(() => resolve());
+      });
 
-      lightboxImage.hidden = true;
-      lightboxVideo.hidden = true;
-      lightboxImage.removeAttribute("src");
-      lightboxImage.alt = "";
-      lightboxImage.classList.remove("is-zoomed");
-      lightboxVideo.pause();
-      lightboxVideo.removeAttribute("src");
-      lightboxVideo.removeAttribute("poster");
-      lightboxVideo.load();
+    const prepareOverlayImage = async (node) => {
+      const src = node.currentSrc || node.src;
+      lightboxImage.src = src;
+      lightboxImage.alt = node.alt || "";
 
-      if (isVideo) {
-        const source = node.querySelector("source");
-        lightboxVideo.poster = node.getAttribute("poster") || "";
-        lightboxVideo.src = source?.src || node.currentSrc || node.src || "";
-        lightboxVideo.setAttribute("aria-label", node.getAttribute("aria-label") || getMediaCaption(node) || "Expanded video");
-        lightboxVideo.currentTime = 0;
-        const shouldLoop = node.hasAttribute("loop");
-        lightboxVideo.loop = shouldLoop;
-        lightboxVideo.muted = false;
-        lightboxVideo.hidden = false;
-        lightboxVideo.play().catch(() => {});
-      } else {
-        lightboxImage.src = node.currentSrc || node.src;
-        lightboxImage.alt = node.alt || "";
-        lightboxImage.hidden = false;
+      if ("decode" in lightboxImage) {
+        try {
+          await lightboxImage.decode();
+          return;
+        } catch {}
       }
 
-      lightboxCaption.textContent = caption;
-      lightboxCaption.hidden = !caption;
-      lightboxZoom = 1;
-      syncLightboxZoom();
-      syncLightboxNavigation();
-    };
+      if (lightboxImage.complete) return;
 
-    const closeLightbox = () => {
-      lightbox.classList.remove("is-open");
-      lightbox.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("lightbox-open");
+      await new Promise((resolve) => {
+        const finish = () => {
+          lightboxImage.removeEventListener("load", finish);
+          lightboxImage.removeEventListener("error", finish);
+          resolve();
+        };
 
-      window.setTimeout(() => {
-        lightbox.hidden = true;
-        lightboxImage.removeAttribute("src");
-        lightboxImage.alt = "";
-        lightboxImage.hidden = true;
-        lightboxVideo.pause();
-        lightboxVideo.removeAttribute("src");
-        lightboxVideo.load();
-        lightboxVideo.hidden = true;
-        lightboxCaption.textContent = "";
-        lightboxCaption.hidden = true;
-        lightboxZoom = 1;
-        activeMedia = [];
-        activeIndex = -1;
-        syncLightboxZoom();
-        syncLightboxNavigation();
-      }, 160);
-    };
-
-    const openLightbox = (node) => {
-      activeMedia = getMediaCollection(node);
-      activeIndex = activeMedia.indexOf(node);
-      showMedia(node);
-      lightbox.hidden = false;
-      document.body.classList.add("lightbox-open");
-
-      requestAnimationFrame(() => {
-        lightbox.classList.add("is-open");
-        lightbox.setAttribute("aria-hidden", "false");
+        lightboxImage.addEventListener("load", finish, { once: true });
+        lightboxImage.addEventListener("error", finish, { once: true });
       });
     };
 
-    const navigateMedia = (direction) => {
-      if (activeMedia.length < 2 || activeIndex < 0) return;
-      activeIndex = (activeIndex + direction + activeMedia.length) % activeMedia.length;
-      showMedia(activeMedia[activeIndex]);
+    const cancelRunningEffects = () => {
+      if (activeAnimation) {
+        activeAnimation.cancel();
+        activeAnimation = null;
+      }
     };
 
-    document.querySelectorAll(".case__figure > img, .case__figure--video > video, .case-gallery__item > img, .case-gallery__item > video").forEach((node) => {
+    const revealSource = () => {
+      if (activeSource) {
+        activeSource.classList.remove("is-lightbox-source-hidden");
+      }
+    };
+
+    const cleanupLightbox = () => {
+      cancelRunningEffects();
+      revealSource();
+      lightbox.classList.remove("is-open");
+      lightbox.style.backgroundColor = "";
+      lightbox.hidden = true;
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImage.hidden = true;
+      lightboxImage.removeAttribute("src");
+      lightboxImage.alt = "";
+      lightboxImage.style.opacity = "1";
+      lightboxImage.style.borderRadius = "12px";
+      lightboxImage.style.top = "0px";
+      lightboxImage.style.left = "0px";
+      lightboxImage.style.width = "0px";
+      lightboxImage.style.height = "0px";
+      activeSource = null;
+      isOpen = false;
+      isAnimating = false;
+    };
+
+    const removeDismissListeners = () => {
+      window.removeEventListener("scroll", handleScrollDismiss);
+      window.removeEventListener("wheel", handleScrollDismiss);
+      window.removeEventListener("touchmove", handleScrollDismiss);
+      window.removeEventListener("resize", handleScrollDismiss);
+      document.removeEventListener("keydown", handleKeyDismiss);
+    };
+
+    const addDismissListeners = () => {
+      window.addEventListener("scroll", handleScrollDismiss, { passive: true });
+      window.addEventListener("wheel", handleScrollDismiss, { passive: true });
+      window.addEventListener("touchmove", handleScrollDismiss, { passive: true });
+      window.addEventListener("resize", handleScrollDismiss, { passive: true });
+      document.addEventListener("keydown", handleKeyDismiss);
+    };
+
+    const animateOverlay = (fromRect, toRect, options) => {
+      const { duration, easing, fromRadius, toRadius, fadeOut } = options;
+
+      applyRect(fromRect);
+      lightboxImage.style.borderRadius = fromRadius;
+      lightboxImage.style.opacity = fadeOut ? "1" : "1";
+
+      if (prefersReducedMotion()) {
+        applyRect(toRect);
+        lightboxImage.style.borderRadius = toRadius;
+        lightboxImage.style.opacity = fadeOut ? "0" : "1";
+        return Promise.resolve();
+      }
+
+      activeAnimation = lightboxImage.animate(
+        [
+          {
+            top: fromRect.top + "px",
+            left: fromRect.left + "px",
+            width: fromRect.width + "px",
+            height: fromRect.height + "px",
+            borderRadius: fromRadius,
+            opacity: 1,
+          },
+          {
+            top: toRect.top + "px",
+            left: toRect.left + "px",
+            width: toRect.width + "px",
+            height: toRect.height + "px",
+            borderRadius: toRadius,
+            opacity: fadeOut ? 0 : 1,
+          },
+        ],
+        {
+          duration,
+          easing,
+          fill: "forwards",
+        }
+      );
+
+      return activeAnimation.finished
+        .catch(() => {})
+        .then(() => {
+          activeAnimation = null;
+          applyRect(toRect);
+          lightboxImage.style.borderRadius = toRadius;
+          lightboxImage.style.opacity = fadeOut ? "0" : "1";
+        });
+    };
+
+    function handleKeyDismiss(event) {
+      if (event.key === "Escape") {
+        closeLightbox("keyboard");
+      }
+    }
+
+    function handleScrollDismiss() {
+      closeLightbox("scroll");
+    }
+
+    const closeLightboxImmediately = () => {
+      cleanupLightbox();
+    };
+
+    const openLightbox = async (node) => {
+      if (isAnimating || activeSource === node) return;
+
+      cancelRunningEffects();
+      revealSource();
+
+      const startRect = getRect(node);
+      if (!startRect || !startRect.width || !startRect.height) return;
+
+      activeSource = node;
+      isAnimating = true;
+      isOpen = false;
+
+      lightbox.hidden = false;
+      lightbox.setAttribute("aria-hidden", "false");
+      lightboxImage.hidden = false;
+      lightboxImage.style.opacity = "1";
+      applyRect(startRect);
+      const sourceRadius = getBorderRadius(node, "8px");
+      const targetRect = getTargetRect(node);
+      lightboxImage.style.borderRadius = sourceRadius;
+
+      await prepareOverlayImage(node);
+      if (activeSource !== node) return;
+
+      await nextFrame();
+      if (activeSource !== node) return;
+
+      node.classList.add("is-lightbox-source-hidden");
+      lightbox.classList.add("is-open");
+      addDismissListeners();
+
+      await nextFrame();
+      if (activeSource !== node) return;
+
+      animateOverlay(startRect, targetRect, {
+        duration: 280,
+        easing: easingEnter,
+        fromRadius: sourceRadius,
+        toRadius: "12px",
+        fadeOut: false,
+      }).then(() => {
+        if (activeSource !== node) return;
+        isAnimating = false;
+        isOpen = true;
+      });
+    };
+
+    const closeLightbox = (reason) => {
+      if (!activeSource || (!isOpen && !isAnimating)) return;
+
+      removeDismissListeners();
+      cancelRunningEffects();
+
+      if (reason === "scroll") {
+        closeLightboxImmediately();
+        return;
+      }
+
+      const source = activeSource;
+      const currentRect = getOverlayRect();
+      const sourceRadius = getBorderRadius(source, "8px");
+
+      isOpen = false;
+      isAnimating = true;
+      lightbox.classList.remove("is-open");
+
+      const endRect = getRect(source) || currentRect;
+
+      animateOverlay(currentRect, endRect, {
+        duration: 220,
+        easing: easingExit,
+        fromRadius: "12px",
+        toRadius: sourceRadius,
+        fadeOut: false,
+      }).then(() => {
+        cleanupLightbox();
+      });
+    };
+
+    lightboxImage.addEventListener("click", () => closeLightbox("click"));
+
+    imageNodes.forEach((node) => {
       node.addEventListener("click", () => openLightbox(node));
-    });
-
-    zoomInButton.addEventListener("click", () => {
-      if (lightboxImage.hidden) return;
-      lightboxZoom = Math.min(3, lightboxZoom + 0.25);
-      syncLightboxZoom();
-    });
-
-    zoomOutButton.addEventListener("click", () => {
-      if (lightboxImage.hidden) return;
-      lightboxZoom = Math.max(1, lightboxZoom - 0.25);
-      syncLightboxZoom();
-    });
-
-    prevButton.addEventListener("click", () => navigateMedia(-1));
-    nextButton.addEventListener("click", () => navigateMedia(1));
-    closeButton.addEventListener("click", closeLightbox);
-
-    lightbox.addEventListener("click", (event) => {
-      if (event.target === lightbox) {
-        closeLightbox();
-      }
-    });
-
-    lightboxStage.addEventListener(
-      "wheel",
-      (event) => {
-        if (lightboxImage.hidden) return;
-        event.preventDefault();
-        lightboxZoom = Math.max(1, Math.min(3, lightboxZoom + (event.deltaY < 0 ? 0.2 : -0.2)));
-        syncLightboxZoom();
-      },
-      { passive: false }
-    );
-
-    document.addEventListener("keydown", (event) => {
-      if (lightbox.hidden) return;
-
-      if (event.key === "Escape") closeLightbox();
-      if (event.key === "ArrowLeft") navigateMedia(-1);
-      if (event.key === "ArrowRight") navigateMedia(1);
-      if (event.key === "+" || event.key === "=") {
-        if (lightboxImage.hidden) return;
-        lightboxZoom = Math.min(3, lightboxZoom + 0.25);
-        syncLightboxZoom();
-      }
-      if (event.key === "-") {
-        if (lightboxImage.hidden) return;
-        lightboxZoom = Math.max(1, lightboxZoom - 0.25);
-        syncLightboxZoom();
-      }
     });
   }
 
@@ -893,7 +910,6 @@
     initPageTransitions();
     initStickyBackLink();
     initCaseViewToggles();
-    initFloatingCaseHeaders();
     initLightbox();
     initComparisons();
     initCertificateCards();
