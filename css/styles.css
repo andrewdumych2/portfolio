@@ -992,13 +992,12 @@ video {
 .case__aside {
   margin: 0;
   padding: 1rem 1.125rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(--color-media-border);
   border-radius: var(--radius-card);
   background: rgba(255, 255, 255, 0.03);
   color: var(--color-text);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-base*1.25);
   line-height: var(--line-height-body);
-  font-style: italic;
 }
 
 .case__lede {
@@ -1022,7 +1021,7 @@ video {
 
 .case__demo-card-media-shell {
   padding: 16px 16px 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   transition: background-color var(--intro-link-transition-duration) var(--intro-link-transition-ease);
 }
 
@@ -1096,7 +1095,7 @@ video {
 
 .case__demo-card:hover .case__demo-card-media-shell,
 .case__demo-card:focus-visible .case__demo-card-media-shell {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 .case__demo-card:hover .case__demo-card-cta,
